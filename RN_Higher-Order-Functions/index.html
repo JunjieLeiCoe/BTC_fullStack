@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Higher Order Functions</title>
+    <link rel="stylesheet" href="./scripts.js">
+
+    <script>
+
+        // abstractions <--> higher order functions;
+        console.log('hello!')
+
+        let  total = 0, count  =1;
+        while  (count <10) {
+            total += count;
+            count += 1;
+        }
+        console.log(total);
+
+        console.log('------');
+        // console.log(sum(range(1, 10)));
+
+
+        function repeat(n, action) {
+            for (let i = 0; i <n; i++){
+                action(i);
+            }
+        }
+
+        let labels = [];
+        repeat(5, i => {
+            labels.push(`Unit ${i+1}`)
+        })
+        console.log(labels);
+
+
+        /** higher order functions;
+         *
+         * functions that are operate on other functions
+         */
+
+        function greaterThan(n) {
+            return m => m > n;
+        }
+        let greaterThan10 = greaterThan(10);
+
+        console.log(greaterThan10(11));
+        console.log('------')
+
+    //    functions that change other functions;
+
+
+        function noisy(f) {
+            return (...args) => {
+                console.log('calling with', args);
+                let result = f(...args);
+                console.log('called with', args, "returned", result);
+            }
+
+        }
+
+        noisy(Math.min)(3,2,1)
+
+
+        console.log('-----')
+
+        // write functions that provide new types of control flow;
+        function unless(test, then) {
+            if(!test) then();
+        }
+
+        repeat(3, n => {
+            unless(n % 2 === 1, () => {
+                console.log(n, 'is even');
+            })
+        })
+
+        my_array = ['A', 'B'];
+        my_array.forEach(
+            l => console.log(l)
+        );
+
+    //    javascripts in Data Processing
+        function filter(array, test) {
+            let passed = [];
+            for (let element of array) {
+                if (test(element)){
+                    passed.push(element);
+                }
+            }
+            return passed;
+        }
+
+        // console.log(
+        //     SCRIPTS.filter(s => s.direction === 'ttb')
+        // )
+
+    //    transforming with Map;
+        function map(array, transform) {
+            let mapped = [];
+            for (let element of array){
+                mapped.push(transform(element));
+            }
+            return mapped;
+        }
+
+
+       // Summarize with reduce/fold;
+        function reduce(array, combine, start) {
+            let current = start;
+            for (let element of array){
+                current = combine(current, element)
+            }
+            return current;
+        }
+
+        console.log('-----')
+
+        console.log(reduce([1,2,3,4], (a,b) => a + b, 0));
+        console.log([1,2,3,4].reduce((a,b) => a +b));
+
+        //unicide reduce twice;
+        function characterCount(script) {
+            return script.ranges.reduce((reduce, [from, to]) => {
+                return  count + (to - from);
+            }, 0);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>
