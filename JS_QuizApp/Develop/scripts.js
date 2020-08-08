@@ -1,5 +1,3 @@
-console.log( 'JS Scripts ready!')
-
 // select all elements
 const start = document.getElementById("start");
 const quiz = document.getElementById("quiz");
@@ -18,9 +16,9 @@ let questions = [
     {
         question : "What does HTML stand for?",
         imgSrc : "../Asset/img/html.png",
-        choiceA : "Test1 ",
-        choiceB : "Hyper Text Markup Languages",
-        choiceC : "test2",
+        choiceA : "Correct",
+        choiceB : "Wrong",
+        choiceC : "Wrong",
         correct : "A"
     },{
         question : "What does CSS stand for?",
@@ -36,6 +34,34 @@ let questions = [
         choiceB : "Wrong",
         choiceC : "Correct",
         correct : "C"
+    },{
+        question : "What does JS stand for?",
+        imgSrc : "../Asset/img/js.png",
+        choiceA : "Wrong",
+        choiceB : "Wrong",
+        choiceC : "Correct",
+        correct : "C"
+    },{
+        question : "What does JS stand for?",
+        imgSrc : "../Asset/img/js.png",
+        choiceA : "Wrong",
+        choiceB : "Wrong",
+        choiceC : "Correct",
+        correct : "C"
+    },{
+        question : "What does JS stand for?",
+        imgSrc : "../Asset/img/js.png",
+        choiceA : "Wrong",
+        choiceB : "Wrong",
+        choiceC : "Correct",
+        correct : "C"
+    },{
+        question : "What does JS stand for?",
+        imgSrc : "../Asset/img/js.png",
+        choiceA : "Wrong",
+        choiceB : "Wrong",
+        choiceC : "Correct",
+        correct : "C"
     }
 ];
 
@@ -43,10 +69,14 @@ let questions = [
 
 const lastQuestion = questions.length - 1;
 let runningQuestion = 0;
-let count = 0;
-const questionTime = 10; // 10s
+
+
+let count = 60;
+const questionTime = 60; // 10s
 const gaugeWidth = 150; // 150px
 const gaugeUnit = gaugeWidth / questionTime;
+
+
 let TIMER;
 let score = 0;
 
@@ -73,6 +103,7 @@ function startQuiz(){
     TIMER = setInterval(renderCounter,1000); // 1000ms = 1s
 }
 
+
 // render progress
 function renderProgress(){
     for(let qIndex = 0; qIndex <= lastQuestion; qIndex++){
@@ -83,10 +114,10 @@ function renderProgress(){
 // counter render
 
 function renderCounter(){
-    if(count <= questionTime){
+    if(count > 0 ){
+        count --;
         counter.innerHTML = count;
         timeGauge.style.width = count * gaugeUnit + "px";
-        count++
     }else{
         count = 0;
         // change progress color to red
@@ -105,7 +136,7 @@ function renderCounter(){
 // checkAnwer
 
 function checkAnswer(answer){
-    if( answer == questions[runningQuestion].correct){
+    if( answer === questions[runningQuestion].correct){
         // answer is correct
         score++;
         // change progress color to green
@@ -115,8 +146,7 @@ function checkAnswer(answer){
         // change progress color to red
         answerIsWrong();
     }
-    count = 0;
-    if(runningQuestion < lastQuestion){
+    if(runningQuestion < lastQuestion && count >= 0){
         runningQuestion++;
         renderQuestion();
     }else{
@@ -134,6 +164,7 @@ function answerIsCorrect(){
 // answer is Wrong
 function answerIsWrong(){
     document.getElementById(runningQuestion).style.backgroundColor = "#f00";
+    count -= 19 // for every question answered wrong, you are ducted 20s;
 }
 
 // score render
@@ -150,10 +181,18 @@ function scoreRender(){
                 (scorePerCent >= 20) ? "../Asset/img/2.png" :
                     "../Asset/img/1.png";
 
+
+
+
+
+    count = 0;
+    let user_name = prompt('Game Finished \n what is your name? ')
+
     scoreDiv.innerHTML = "<img src="+ img +">";
-    scoreDiv.innerHTML += "<p>"+ scorePerCent +"%</p>";
+
+    scoreDiv.innerHTML += "<p>" + user_name + "\n" +  scorePerCent +"%</p>";
+    localStorage.setItem( user_name, JSON.stringify(scorePerCent))
+
 }
-
-
 
 
