@@ -11,7 +11,7 @@ const timeGauge = document.getElementById("timeGauge");
 const progress = document.getElementById("progress");
 const scoreDiv = document.getElementById("scoreContainer");
 const $viewHist = $("#hist");
-const $socreBoard  = $('#scoreBoard')
+const scoreBoard  = $('#scoreBoard')
 
 
 // create our questions
@@ -96,14 +96,14 @@ function renderQuestion(){
 
 start.addEventListener("click",startQuiz);
 $viewHist.on('click', function(){
-
+    scoreBoard.html('');
 
     for (let i = 0; i < Object.entries(localStorage).length; i++){
         const name = Object.entries(localStorage)[i][0];
         const scores = Object.entries(localStorage)[i][1];
         const $li = $('<li>')
         $li.text(name + '\t' +  scores)
-        $socreBoard.append($li)
+        scoreBoard.append($li)
 
     }
 
