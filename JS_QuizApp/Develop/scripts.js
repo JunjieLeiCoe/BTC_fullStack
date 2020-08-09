@@ -10,6 +10,9 @@ const counter = document.getElementById("counter");
 const timeGauge = document.getElementById("timeGauge");
 const progress = document.getElementById("progress");
 const scoreDiv = document.getElementById("scoreContainer");
+const $viewHist = $("#hist");
+const $socreBoard  = $('#scoreBoard')
+
 
 // create our questions
 let questions = [
@@ -92,6 +95,25 @@ function renderQuestion(){
 }
 
 start.addEventListener("click",startQuiz);
+$viewHist.on('click', function(){
+
+
+    for (let i = 0; i < Object.entries(localStorage).length; i++){
+        const name = Object.entries(localStorage)[i][0];
+        const scores = Object.entries(localStorage)[i][1];
+        const $li = $('<li>')
+        $li.text(name + '\t' +  scores)
+        $socreBoard.append($li)
+
+    }
+
+
+
+
+
+
+})
+
 
 // start quiz
 function startQuiz(){
@@ -119,7 +141,7 @@ function renderCounter(){
         counter.innerHTML = count;
         timeGauge.style.width = count * gaugeUnit + "px";
     }else{
-        count = 0;
+
         // change progress color to red
         answerIsWrong();
         if(runningQuestion < lastQuestion){
@@ -127,13 +149,14 @@ function renderCounter(){
             renderQuestion();
         }else{
             // end the quiz and show the score
+            count = 0;
             clearInterval(TIMER);
             scoreRender();
         }
     }
 }
 
-// checkAnwer
+// checkAnswer
 
 function checkAnswer(answer){
     if( answer === questions[runningQuestion].correct){
